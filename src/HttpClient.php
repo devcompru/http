@@ -17,6 +17,7 @@ class HttpClient implements HttpClientInterface
 
     public function response(): ResponseInterface
     {
+        echo "2";
         return  Response::getInstance();
 
     }
