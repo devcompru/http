@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Devcompru;
 
 
+use Devcomp\SingleTrate;
 use Devcompru\Interfaces\ResponseInterface;
 
 class Response implements ResponseInterface
 {
+    use SingleTrate;
+
     public function addHeader(string $name, string $value): bool
     {
         // TODO: Implement addHeader() method.

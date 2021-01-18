@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Devcompru;
 
+use Devcomp\SingleTrate;
 use Devcompru\Interfaces\CookiesInterface;
 use Devcompru\Interfaces\HttpClientInterface;
 use Devcompru\Interfaces\RequestInterface;
@@ -12,22 +13,24 @@ use Devcompru\Interfaces\SessionsInterface;
 
 class HttpClient implements HttpClientInterface
 {
+    use SingleTrate;
+
     public function response(): ResponseInterface
     {
-        // TODO: Implement response() method.
+        return  Response::getInstance();
 
     }
     public function request(): RequestInterface
     {
-        // TODO: Implement request() method.
+        return Request::getInstance();
     }
     public function cookies(): CookiesInterface
     {
-        // TODO: Implement cookies() method.
+        return Cookies::getInstance();
     }
     public function sessions(): SessionsInterface
     {
-        
+        return Sessions::getInstance();
     }
 
 }

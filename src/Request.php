@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Devcompru;
 
 
+use Devcomp\SingleTrate;
 use Devcompru\Interfaces\RequestInterface;
 
 class Request implements RequestInterface
 {
+    use SingleTrate;
 
     public function isHttps():  bool
     {

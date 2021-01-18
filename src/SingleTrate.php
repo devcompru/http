@@ -6,5 +6,15 @@ namespace Devcomp;
 
 trait SingleTrate
 {
+    private static $instance = null;
+    public static function getInstance()
+    {
+        return self::$instance ??= new static;
+    }
+
+    private function __construct(){}
+    private function __wakeup(){}
+    private function __serialize(){}
+
 
 }
