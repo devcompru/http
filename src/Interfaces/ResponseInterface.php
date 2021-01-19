@@ -26,4 +26,6 @@ interface ResponseInterface
     public function sendError(int $code, string $message):void;
 
 
+    public function disableCloseConnection():void;
+
 }

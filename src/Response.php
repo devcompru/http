@@ -14,6 +14,7 @@ class Response implements ResponseInterface
     private string $body = '';
     private bool $as_json = true;
     private bool $error = false;
+    private bool $disableCloseConnection = false;
     use SingleTrait;
 
     private function __construct()
@@ -45,6 +46,7 @@ class Response implements ResponseInterface
     {
         // TODO: Implement headers() method.
     }
+
 
     public function asJson(): ResponseInterface
     {
@@ -87,21 +89,25 @@ class Response implements ResponseInterface
     public function emit(): void
     {
 
+        if($this->disableCloseConnection)
+            {
+                echo $this->body;
+            }
+        else
+            {
+                $this->addHeader('Connection', 'close');
+                ignore_user_abort(); // optional
+                ob_start();
+                echo $this->body;
+                $size = ob_get_length();
+                $this->addHeader('Content-Length', $size);
+                ob_end_flush(); // Strange behaviour, will not work
+                flush();            // Unless both are called !
+                session_write_close(); // Added a line suggested in the comment
+                fastcgi_finish_request();
 
-        $this->addHeader('Connection', 'close');
-        ignore_user_abort(); // optional
-        ob_start();
-        echo $this->body;
-        $size = ob_get_length();
-        $this->addHeader('Content-Length', $size);
+            }
 
-        ob_end_flush(); // Strange behaviour, will not work
-        flush();            // Unless both are called !
-        session_write_close(); // Added a line suggested in the comment
-
-
-
-        exit;
     }
     public function sendJson(string|array|object $data):void
     {
@@ -123,4 +129,11 @@ class Response implements ResponseInterface
         $this->code = $code;
         $this->emit();
     }
+
+
+    public function disableCloseConnection():void
+    {
+        $this->disableCloseConnection = true;
+    }
+
 }
