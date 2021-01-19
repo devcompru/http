@@ -14,6 +14,9 @@ class Request implements RequestInterface
     private string $method = '';
     private array $headers = [];
     private array $parsed_uri = [];
+
+    private array $bodyParams = [];
+
     private function __construct()
     {
         $this->method = (isset($_SERVER['REQUEST_METHOD']))?$_SERVER['REQUEST_METHOD']:'GET';
@@ -81,34 +84,91 @@ class Request implements RequestInterface
         }
         return false;
     }
-    public function get(string $name = ''):     array|string
+    public function get(?string $name = null):     array|string|bool
     {
+        $params = $_GET;
+        return $this->getParamsByName($params, $name);
+    }
+    public function post(?string $name = null):    array|string|bool
+    {
+        if(!$this->isPost())
+            return false;
+        $body = $this->getQueryBody();
+
+        $this->bodyParams = $this->getParamsByBody($body);
+
+        return $this->getParamsByName($this->bodyParams, $name);
+    }
+    public function put(?string $name = null):     array|string|bool
+    {
+        if(!$this->isPut())
+            return false;
+        $body = $this->getQueryBody();
+
+        $this->bodyParams = $this->getParamsByBody($body);
+
+        return $this->getParamsByName($this->bodyParams, $name);
 
     }
-    public function post(string $name = ''):    array|string
+    public function patch(?string $name = null):   array|string|bool
     {
+        if(!$this->isPatch())
+            return false;
+        $body = $this->getQueryBody();
+
+        $this->bodyParams = $this->getParamsByBody($body);
+        return $this->getParamsByName($this->bodyParams, $name);
 
     }
-    public function put(string $name = ''):     array|string
+    public function getQueryString():string|bool
     {
 
-    }
-    public function patch(string $name = ''):   array|string
-    {
-
-    }
-    public function getQueryBody():string
-    {
-
+        return $this->parsed_uri['query']??=false;
     }
     public function getUri():      string
     {
         return $this->parsed_uri['path'];
     }
 
-    public function getHeaders(string $name = ''): array|string
+    public function getHeaders(?string $name = null): array|string|bool
     {
+        $params = $this->headers;
 
+        return $this->getParamsByName($params, $name);
+    }
+    public function getQueryBody(): string
+    {
+       return file_get_contents("php://input");
+    }
+
+    /**
+     * HELPERS
+     */
+    private function isJson($data)
+    {
+        json_decode($data);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
+    private function getParamsByName($params, $name)
+    {
+        if($name === null){
+            return $params;
+        }
+        elseif ($name!=null && isset($params[$name])){
+            return $params[$name];
+        }
+        else{
+            return '';
+        }
+    }
+    private function getParamsByBody($body)
+    {
+        if($this->isJson($body))
+            $params = json_decode($body, true);
+        else
+            parse_str($body, $params);
+
+        return $params;
     }
 
 }
