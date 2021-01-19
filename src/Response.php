@@ -24,6 +24,8 @@ class Response implements ResponseInterface
 
     public function addHeader(string $name, string|float $value): ResponseInterface
     {
+        $name= trim($name);
+        $name = implode('-', array_map(fn($el)=>ucfirst($el), explode('-',$name)));
         if(headers_sent())
             throw new \Exception('Error send headers, headers is sent');
         else
@@ -34,17 +36,34 @@ class Response implements ResponseInterface
 
     public function addHeaders(array $array): ResponseInterface
     {
-        // TODO: Implement addHeaders() method.
+        foreach ($array as $name=>$value)
+            $this->addHeader($name, $value);
+        return $this;
     }
 
     public function hasHeader(string $name): bool
     {
-        // TODO: Implement hasHeader() method.
+        $headers_list = headers_list();
+        foreach ($headers_list as $value)
+            if(strtoupper($name)=== strtoupper(mb_substr($value, 0,strlen($name))))
+                return true;
+
+        return false;
     }
 
-    public function headers(string $name): array|string|bool
+    public function headers(string $name = ''): array|string|bool
     {
-        // TODO: Implement headers() method.
+        if($name === '') {
+            return headers_list();
+        }
+        elseif($name != '') {
+            $headers_list = headers_list() ;
+            foreach ($headers_list as $value)
+                if(strtoupper($name)=== strtoupper(mb_substr($value, 0,strlen($name))))
+                    return mb_substr($value, strlen($name)+2);
+        }
+
+        return false;
     }
 
 
