@@ -61,12 +61,14 @@ class Response implements ResponseInterface
 
     public function setBody(string $body): ResponseInterface
     {
-        // TODO: Implement setBody() method.
+        $this->body = $body;
+        return $this;
     }
 
     public function setCode(int $code = 200): ResponseInterface
     {
-        // TODO: Implement setCode() method.
+        $this->code = $code;
+        return $this;
     }
 
     public function view(array|object $params, string|bool $template='' ): ResponseInterface
@@ -101,7 +103,7 @@ class Response implements ResponseInterface
 
         exit;
     }
-    public function sendJson($data)
+    public function sendJson(string|array|object $data):void
     {
 
         $response = [
@@ -114,7 +116,7 @@ class Response implements ResponseInterface
         $this->emit();
 
     }
-    public function sendError(int $code, string $message)
+    public function sendError(int $code, string $message):void
     {
         $this->error = true;
         $this->body = $message;

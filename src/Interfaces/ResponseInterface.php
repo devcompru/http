@@ -15,11 +15,15 @@ interface ResponseInterface
     public function headers(string $name):      array|string|bool;
 
     public function asJson():                   ResponseInterface;
+    public function asHtml():                   ResponseInterface;
+
     public function setBody(string $body):      ResponseInterface;
     public function setCode(int $code = 200):   ResponseInterface;
     public function view(array $params, string|bool $template= false):ResponseInterface;
 
     public function emit():void;
+    public function sendJson(string|array|object $data):void;
+    public function sendError(int $code, string $message):void;
 
 
 }
