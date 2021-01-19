@@ -14,20 +14,20 @@ interface RequestInterface
     public function isPut():    bool;
     public function isPatch():  bool;
 
-    public function method():   string;
-    public function protocol(): string;
-    public function IP():       string;
-    public function userAgent():string;
+    public function getMethod():   string;
+    public function getProtocol(): string;
+    public function getIP():       string;
+    public function getUserAgent():string;
 
     public function hasHeader(string $name):    bool;
     public function get(string $name = ''):     array|string;
     public function post(string $name = ''):    array|string;
     public function put(string $name = ''):     array|string;
     public function patch(string $name = ''):   array|string;
-    public function queryBody():string;
-    public function uri():      string;
+    public function getQueryBody():string;
+    public function getUri():   string;
 
-    public function headers(string $name = ''): array|string;
+    public function getHeaders(string $name = ''): array|string;
 
 
 

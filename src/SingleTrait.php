@@ -12,7 +12,7 @@ trait SingleTrait
         return self::$instance ??= new static;
     }
 
-    private function __construct(){}
+
 
 
 
