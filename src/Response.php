@@ -11,6 +11,7 @@ use Devcompru\Interfaces\ResponseInterface;
 class Response implements ResponseInterface
 {
     private int $code = 200;
+    public string $powered_by = 'devcomp.ru';
     private string $body = '';
     private bool $as_json = true;
     private bool $error = false;
@@ -19,6 +20,7 @@ class Response implements ResponseInterface
 
     private function __construct()
     {
+        $this->addHeader('X-Powered-By', $this->powered_by);
         $this->asJson();
     }
 
