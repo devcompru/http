@@ -10,7 +10,6 @@ use Devcompru\Interfaces\CookiesInterface;
 
 class Cookies implements CookiesInterface
 {
-    use SingleTrait;
 
 
 

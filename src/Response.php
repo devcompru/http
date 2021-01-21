@@ -16,9 +16,9 @@ class Response implements ResponseInterface
     private bool $as_json = true;
     private bool $error = false;
     private bool $disableCloseConnection = false;
-    use SingleTrait;
 
-    private function __construct()
+
+    public function __construct()
     {
         $this->addHeader('X-Powered-By', $this->powered_by);
         $this->asJson();

@@ -10,14 +10,14 @@ use Devcompru\Interfaces\RequestInterface;
 
 class Request implements RequestInterface
 {
-    use SingleTrait;
+
     private string $method = '';
     private array $headers = [];
     private array $parsed_uri = [];
 
     private array $bodyParams = [];
 
-    private function __construct()
+    public function __construct()
     {
         $this->method = (isset($_SERVER['REQUEST_METHOD']))?$_SERVER['REQUEST_METHOD']:'GET';
         $headers = getallheaders();

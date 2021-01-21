@@ -10,7 +10,7 @@ use Devcompru\Interfaces\SessionsInterface;
 
 class Sessions implements SessionsInterface
 {
-    use SingleTrait;
+
 
     public function start(array $options = null): ?bool
     {
