@@ -24,7 +24,8 @@ class Sessions implements SessionsInterface
 
     public function get(string $name = null): mixed
     {
-        $params = $_SESSION;
+        $params = isset($_SESSION)?$_SESSION:[];
+
         if($name === null){
             return $params;
         }
@@ -38,7 +39,7 @@ class Sessions implements SessionsInterface
 
     public function has($name):bool
     {
-        return isset($_SESSION[$name]);
+        return (isset($_SESSION[$name]) && isset($_SESSION));
     }
     public function set(string $name, mixed $value): bool
     {
@@ -47,6 +48,20 @@ class Sessions implements SessionsInterface
         else
             return false;
         return true;
+    }
+
+    public function remove(): bool
+    {
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+
+        return session_destroy();
+
     }
 
     public function cleanInactive(): int
