@@ -24,20 +24,20 @@ class HttpClient implements HttpClientInterface
         return self::$instance??= new static;
     }
 
-    public function response(): Response
+    public function response(): ResponseInterface
     {
 
         return $this->instances['response'] ??= new Response();
     }
-    public function request(): Request
+    public function request(): RequestInterface
     {
         return $this->instances['request'] ??= new Request();
     }
-    public function cookies(): Cookies
+    public function cookies(): CookiesInterface
     {
         return $this->instances['cookies'] ??= new Cookies();
     }
-    public function sessions(): Sessions
+    public function sessions(): SessionsInterface
     {
         return $this->instances['sessions'] ??= new Sessions();
     }
