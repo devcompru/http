@@ -24,7 +24,7 @@ class Response implements ResponseInterface
         $this->asJson();
     }
 
-    public function addHeader(string $name, string|float $value): ResponseInterface
+    public function addHeader(string $name, string|float $value): Response
     {
         $name= trim($name);
         $name = implode('-', array_map(fn($el)=>ucfirst($el), explode('-',$name)));
@@ -36,7 +36,7 @@ class Response implements ResponseInterface
         return $this;
     }
 
-    public function addHeaders(array $array): ResponseInterface
+    public function addHeaders(array $array): Response
     {
         foreach ($array as $name=>$value)
             $this->addHeader($name, $value);
@@ -69,32 +69,32 @@ class Response implements ResponseInterface
     }
 
 
-    public function asJson(): ResponseInterface
+    public function asJson(): Response
     {
         $this->addHeader('Content-Type', 'application/json; charset=UTF-8');
         $this->as_json = true;
         return $this;
     }
-    public function asHtml(): ResponseInterface
+    public function asHtml(): Response
     {
         $this->addHeader('Content-Type', 'text/html; charset=UTF-8');
         $this->as_json = false;
         return $this;
     }
 
-    public function setBody(string $body): ResponseInterface
+    public function setBody(string $body): Response
     {
         $this->body = $body;
         return $this;
     }
 
-    public function setCode(int $code = 200): ResponseInterface
+    public function setCode(int $code = 200): Response
     {
         $this->code = $code;
         return $this;
     }
 
-    public function view(array|object $params, string|bool $template='' ): ResponseInterface
+    public function view(array|object $params, string|bool $template='' ): Response
     {
         $this->body = $template;
         if(!$template) {
