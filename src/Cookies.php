@@ -6,9 +6,7 @@ namespace Devcompru;
 
 
 
-use Devcompru\Interfaces\CookiesInterface;
-
-class Cookies implements CookiesInterface
+class Cookies
 {
 
 

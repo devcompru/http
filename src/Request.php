@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Devcompru;
 
-
-
-use Devcompru\Interfaces\RequestInterface;
-
-class Request implements RequestInterface
+class Request
 {
 
     private string $method = '';

@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Devcompru;
 
 
-
-use Devcompru\Interfaces\ResponseInterface;
-
-class Response implements ResponseInterface
+class Response
 {
     private int $code = 200;
     public string $powered_by = 'devcomp.ru';
@@ -24,7 +21,7 @@ class Response implements ResponseInterface
         $this->asJson();
     }
 
-    public function addHeader(string $name, string|float $value): Response
+    public function addHeader(string $name, string|float $value): void
     {
         $name= trim($name);
         $name = implode('-', array_map(fn($el)=>ucfirst($el), explode('-',$name)));
@@ -33,14 +30,14 @@ class Response implements ResponseInterface
         else
             header("$name: $value", true);
 
-        return $this;
+
     }
 
-    public function addHeaders(array $array): Response
+    public function addHeaders(array $array): void
     {
         foreach ($array as $name=>$value)
             $this->addHeader($name, $value);
-        return $this;
+
     }
 
     public function hasHeader(string $name): bool
@@ -69,32 +66,32 @@ class Response implements ResponseInterface
     }
 
 
-    public function asJson(): Response
+    public function asJson(): void
     {
         $this->addHeader('Content-Type', 'application/json; charset=UTF-8');
         $this->as_json = true;
-        return $this;
+
     }
-    public function asHtml(): Response
+    public function asHtml(): void
     {
         $this->addHeader('Content-Type', 'text/html; charset=UTF-8');
         $this->as_json = false;
-        return $this;
+
     }
 
-    public function setBody(string $body): Response
+    public function setBody(string $body): void
     {
         $this->body = $body;
-        return $this;
+
     }
 
-    public function setCode(int $code = 200): Response
+    public function setCode(int $code = 200): void
     {
         $this->code = $code;
-        return $this;
+
     }
 
-    public function view(array|object $params, string|bool $template='' ): Response
+    public function view(array|object $params, string|bool $template='' ): void
     {
         $this->body = $template;
         if(!$template) {
@@ -104,7 +101,7 @@ class Response implements ResponseInterface
            foreach ($params as $key=>$value)
                $this->body = str_replace('{$'.$key.'}', $value, $this->body);
         }
-        return $this;
+
     }
 
     public function emit(): void

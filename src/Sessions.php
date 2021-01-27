@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Devcompru;
 
 
-
-use Devcompru\Interfaces\SessionsInterface;
-
-class Sessions implements SessionsInterface
+class Sessions
 {
 
 

@@ -5,41 +5,33 @@ declare(strict_types=1);
 namespace Devcompru;
 
 
-use Devcompru\Interfaces\CookiesInterface;
-use Devcompru\Interfaces\HttpClientInterface;
-use Devcompru\Interfaces\RequestInterface;
-use Devcompru\Interfaces\ResponseInterface;
-use Devcompru\Interfaces\SessionsInterface;
 
-class HttpClient implements HttpClientInterface
+
+class HttpClient
 {
-    private static HttpClientInterface $instance;
-    private array $instances;
 
-    private function __construct(){}
-    private function __clone(){}
+    protected array $instances;
+    protected Response $response;
+    protected Request $request;
+    protected Cookies $cookies;
+    protected Sessions $sessions;
 
-    public static function getInstance()
-    {
-        return self::$instance??= new static;
-    }
-
-    public function response(): ResponseInterface
+    public function response(): Response
     {
 
-        return $this->instances['response'] ??= new Response();
+        return $this->response ??= new Response();
     }
-    public function request(): RequestInterface
+    public function request(): Request
     {
-        return $this->instances['request'] ??= new Request();
+        return $this->request ??= new Request();
     }
-    public function cookies(): CookiesInterface
+    public function cookies(): Cookies
     {
-        return $this->instances['cookies'] ??= new Cookies();
+        return $this->cookies ??= new Cookies();
     }
-    public function sessions(): SessionsInterface
+    public function sessions(): Sessions
     {
-        return $this->instances['sessions'] ??= new Sessions();
+        return $this->sessions ??= new Sessions();
     }
 
 }
