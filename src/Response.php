@@ -2,12 +2,8 @@
 declare(strict_types=1);
 
 
-namespace Core\Http;
+namespace Devcomp\Http;
 
-
-use Core\Core;
-use Core\Interfaces\HeadersInterface;
-use Core\Interfaces\ResponseInterface;
 
 class Response implements ResponseInterface
 {
@@ -15,19 +11,19 @@ class Response implements ResponseInterface
             TYPE_HTML = 'HTML',
             TYPE_XML = 'XML',
             TYPE_RAW = 'RAW';
-    private HeadersInterface $_headers;
+    private  $_headers;
     private int $_code = 200;
     private mixed $_body;
     private string $_type  = self::TYPE_JSON;
     private bool $_error = false;
-    public function __construct(HeadersInterface $headers)
+    public function __construct()
     {
-        $this->_headers = $headers;
+
 
     }
 
 
-    public function emit(): ResponseInterface
+    public function emit()
     {
 
 
@@ -85,7 +81,7 @@ class Response implements ResponseInterface
 
     }
 
-    public function setType(string $type):ResponseInterface
+    public function setType(string $type)
     {
         if($type === self::TYPE_JSON || $type === self::TYPE_HTML || $type === self::TYPE_XML || $type === self::TYPE_RAW )
             $this->_type = $type;
@@ -95,24 +91,24 @@ class Response implements ResponseInterface
     {
         $this->_type = self::TYPE_HTML;
     }
-    public function setBody(mixed $body): ResponseInterface
+    public function setBody(mixed $body)
     {
         $this->_body = $body;
         return $this;
     }
 
-    public function setDefaultHeaders(array $headers): ResponseInterface
+    public function setDefaultHeaders(array $headers)
     {
         $this->_headers->set('content-type', 'application/json;charset=utf-8');
         return $this;
     }
 
-    public function setCode( $code=200): ResponseInterface
+    public function setCode( $code=200)
     {
         $this->_code = (int)$code;
         return $this;
     }
-    public function setError(bool $error = true): ResponseInterface
+    public function setError(bool $error = true)
     {
         $this->_error = $error;
         return $this;
