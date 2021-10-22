@@ -2,10 +2,8 @@
 declare(strict_types=1);
 
 
-namespace Core\Http;
+namespace Devcompru\Http;
 
-
-use Core\Interfaces\SessionsInterface;
 
 use function session_start;
 use function session_destroy;
@@ -17,7 +15,7 @@ use function time;
 use function serialize;
 use function unserialize;
 
-class Sessions implements SessionsInterface
+class Sessions
 {
     private array $_sessions;
 

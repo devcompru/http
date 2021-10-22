@@ -2,10 +2,10 @@
 declare(strict_types=1);
 
 
-namespace Core\Http;
+namespace Devcompru\Http;
 
 
-use Core\Interfaces\HeadersInterface;
+
 use Exception;
 
 use function getallheaders;
@@ -19,9 +19,9 @@ use function explode;
 use function implode;
 
 
-class Headers implements HeadersInterface
+class Headers
 {
-    private static HeadersInterface $_instance;
+    private static  $_instance;
     private array $_headers;
 
     public function __construct()

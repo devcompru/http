@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace Devcomp\Http;
+namespace Devcompru\Http;
 
 
 use function filter_var;
